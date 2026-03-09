@@ -18,8 +18,8 @@ class MySqlConnectionHandler:
     
     def __enter__(self):
         session_maker = sessionmaker(bind=self.__engine)
-        self.session = session_maker
+        self.session = session_maker()
         return self
     
-    def __exit__(self):
+    def __exit__(self, exc_type, exc_val, exc_tb):
         self.session.close()
