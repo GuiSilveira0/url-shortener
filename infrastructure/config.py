@@ -20,6 +20,8 @@ class EnvironmentSettings(BaseSettings):
     REDIS_PORT: int
     REDIS_USERNAME: str
     REDIS_PASSWORD: str
+    
+    API_BASE_URL: str
 
     class config:
         env_file = get_env_filename()

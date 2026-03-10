@@ -2,11 +2,16 @@ from app.entities.shortener_entity import CreateUrlRequest, UrlResponse
 from app.usecase.shortener_usecase import ShortenerUsecase
 from fastapi import APIRouter, Depends, HTTPException, status
 from infrastructure.db.sql.repository.shortener_repository import ShortenerRepository
+from infrastructure.db.redis.repository.redis_repository import RedisRepository
+from infrastructure.config import get_environment_variable
 
 router = APIRouter(prefix="/api/v1", tags=["URL Shortener"])
 
+env = get_environment_variable()
+
 shortner_usecase = ShortenerUsecase(
-    shortenerRepository = ShortenerRepository()
+    shortenerRepository = ShortenerRepository(),
+    redisRepository = RedisRepository()
 )
 
 get_usecase = lambda: shortner_usecase
@@ -26,8 +31,8 @@ def create_short_url(
     Endpoint para criar uma nova URL curta.
     """
     try:
-        short_code = usecase.generate_short_code(str(request.url))
-        full_short_url = f"http://localhost:8000/{short_code}"
+        short_code = usecase.generate_short_code(str(request.url), "")
+        full_short_url = f"{env.API_BASE_URL}/{short_code}"
         
         return UrlResponse(
             original_url=str(request.url),

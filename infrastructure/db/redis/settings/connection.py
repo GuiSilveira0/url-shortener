@@ -9,9 +9,7 @@ class RedisConnectionHandler:
             host=env.REDIS_HOST,
             port=env.REDIS_PORT,
             db=db,
-            username=env.REDIS_USERNAME,
-            password=env.REDIS_PASSWORD,
-            decode_response=True
+            decode_responses=True
         )
 
     def __enter__(self) -> redis.Redis:
