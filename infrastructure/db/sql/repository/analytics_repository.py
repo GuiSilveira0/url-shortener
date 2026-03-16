@@ -4,8 +4,7 @@ from sqlalchemy import func
 from sqlalchemy.exc import SQLAlchemyError
 from app.gateway.analytics_repository_gateway import AnalyticsRepositoryGateway
 from infrastructure.db.sql.settings.connection import MySqlConnectionHandler
-from app.entities.db_models_entity import UrlAnalytics
-
+from app.entities.db_models_entity import UrlAnalytics, UrlStatsSummary
 
 class AnalyticsRepository(AnalyticsRepositoryGateway):
     
@@ -34,8 +33,6 @@ class AnalyticsRepository(AnalyticsRepositoryGateway):
     def get_stats_summary(self, short_code: str) -> Optional[dict]:
         with MySqlConnectionHandler() as db:
             try:
-                from app.entities.db_models_entity import UrlStatsSummary
-                
                 summary = db.session.query(UrlStatsSummary).filter(
                     UrlStatsSummary.short_code == short_code
                 ).first()
@@ -166,7 +163,6 @@ class AnalyticsRepository(AnalyticsRepositoryGateway):
     def get_top_referrers(self, short_code: str, limit: int = 10) -> List[dict]:
         with MySqlConnectionHandler() as db:
             try:
-                
                 results = db.session.query(
                     UrlAnalytics.referrer,
                     func.count(UrlAnalytics.id).label('clicks')
