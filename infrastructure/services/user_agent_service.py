@@ -1,14 +1,9 @@
-from typing import Optional
 from user_agents import parse
 
 class UserAgentService:
     
     @staticmethod
     def parse_user_agent(user_agent_string: str) -> dict:
-        """
-        Analisa a string User Agent e retorna informações estruturadas.
-        Retorna dict com device_type, os, browser.
-        """
         if not user_agent_string:
             return {
                 "device_type": None,
@@ -19,7 +14,6 @@ class UserAgentService:
         try:
             user_agent = parse(user_agent_string)
             
-            # Determina o tipo de dispositivo
             if user_agent.is_mobile:
                 device_type = "Mobile"
             elif user_agent.is_tablet:

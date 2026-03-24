@@ -7,6 +7,3 @@ class UrlResponse(BaseModel):
     original_url: str
     short_code: str
     short_url: str
-
-class ErrorResponse(BaseModel):
-    detail: str

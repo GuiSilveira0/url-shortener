@@ -1,4 +1,6 @@
 from abc import ABC, abstractmethod
+from typing import Optional
+
 
 class AnalyticsRedisRepositoryGateway(ABC):
     
@@ -29,15 +31,19 @@ class AnalyticsRedisRepositoryGateway(ABC):
     @abstractmethod
     def increment_browser_clicks(self, short_code: str, browser: str) -> int:
         pass
-    
+
     @abstractmethod
     def get_realtime_stats(self, short_code: str) -> dict:
         pass
-    
+
     @abstractmethod
-    def get_unique_visitors_count(self, short_code: str) -> int:
+    def get_cached_stats(self, cache_key: str) -> Optional[dict]:
         pass
-    
+
     @abstractmethod
-    def clear_stats(self, short_code: str) -> bool:
+    def set_cached_stats(self, cache_key: str, data: dict, ttl: int = 60) -> None:
+        pass
+
+    @abstractmethod
+    def invalidate_cache(self, short_code: str) -> None:
         pass

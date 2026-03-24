@@ -1,5 +1,6 @@
 from datetime import datetime
 from app.controller.shortener_controller import router, shortner_usecase
+from app.controller.analytics_controller import router as analytics_router
 from app.usecase.analytics_usecase import AnalyticsUsecase
 from fastapi import FastAPI, HTTPException, status, Request, BackgroundTasks
 from fastapi.responses import RedirectResponse
@@ -11,6 +12,7 @@ from infrastructure.services.user_agent_service import UserAgentService
 app = FastAPI(title="URL Shortener")
 
 app.include_router(router)
+app.include_router(analytics_router)
 
 analytics_usecase = AnalyticsUsecase(
     analytics_repository=AnalyticsRepository(),

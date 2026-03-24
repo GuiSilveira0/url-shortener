@@ -13,9 +13,6 @@ class MySqlConnectionHandler:
         engine = create_engine(env.DATABASE_URL)
         return engine
     
-    def get_engine(self):
-        return self.__engine
-    
     def __enter__(self):
         session_maker = sessionmaker(bind=self.__engine)
         self.session = session_maker()
